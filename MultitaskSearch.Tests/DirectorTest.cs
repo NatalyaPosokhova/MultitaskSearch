@@ -74,5 +74,11 @@ namespace MultitaskSearch.Tests
             Assert.AreEqual(chunk1, actuals[0]);
             Assert.AreEqual(chunk2, actuals[1]);
         }
+
+        [Test]
+        public void CallWordspositionsShouldBeCorrect()
+        {
+            //TODO
+        }
     }
 }
