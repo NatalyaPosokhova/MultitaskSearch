@@ -7,17 +7,17 @@ namespace MultitaskSearch
 {
     public class Director : AbstractDirector
     {
-        public Director(IDataProvider provider) : base(provider)
+        public Director(IDataProvider provider, int blockSize, char[] searchWords) : base(provider,blockSize, searchWords)
         {
 
         }
 
-        public override Task CreateCollector()
+        public override Task<Dictionary<string, IList<int>>> CreateCollector()
         {
             throw new NotImplementedException();
         }
 
-        public override Task CreateSearcher(Chunk chunk)
+        public override void CreateSearcher(Chunk chunk)
         {
             throw new NotImplementedException();
         }

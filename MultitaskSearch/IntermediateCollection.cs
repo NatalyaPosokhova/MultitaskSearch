@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MultitaskSearch
 {
-    public class Collector
+    public class IntermediateCollection
     {
         public Dictionary<char[], int[]> GetSearchResults()
         {
