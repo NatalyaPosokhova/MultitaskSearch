@@ -13,6 +13,6 @@ namespace MultitaskSearch
     public struct Chunk
     {
         public int StartIndex;
-        public char[] Content;
+        public string Content;
     }
 }

@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MultitaskSearch
 {
     public class IntermediateCollection
     {
-        public Dictionary<char[], int[]> GetSearchResults()
+        public async Task<Dictionary<string[], IList<int>>> GetSearchResults()
         {
-            throw new NotSupportedException();
+            throw new NotImplementedException();
         }
     }
 }

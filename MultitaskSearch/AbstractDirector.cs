@@ -10,9 +10,9 @@ namespace MultitaskSearch
         private readonly IDataProvider _provider;
         private readonly int _blockSize;
         protected readonly IntermediateCollection _collector;
-        private readonly char[] _searchWords;
+        private readonly string[] _searchWords;
         
-        public AbstractDirector(IDataProvider provider, int blockSize, char[] searchWords)
+        public AbstractDirector(IDataProvider provider, int blockSize, string[] searchWords)
         {
             _provider = provider;
             _blockSize = blockSize;
@@ -20,18 +20,19 @@ namespace MultitaskSearch
             _searchWords = searchWords;
         }
 
-        public abstract void CreateSearcher(Chunk chunk);
-        public abstract Task<Dictionary<string, IList<int>>> CreateCollector();
+        public abstract void CreateSearcher(Chunk chunk, IntermediateCollection intermediateCollection);
+        public abstract Task<Dictionary<string, IList<int>>> CreateCollector(IntermediateCollection intermediateCollection);
         public async Task<Dictionary<string, IList<int>>> GetWordsPositions()
         {
-           var t =  CreateCollector();
+            IntermediateCollection intermediateCollection = new IntermediateCollection();
             while (_provider.IsDataExists())
             {
                 Chunk chunk = _provider.GetData(_blockSize);
-                CreateSearcher(chunk);
+                CreateSearcher(chunk, intermediateCollection);
             }
-            await t;
-            return t.Result;
+
+            var collector = await CreateCollector(intermediateCollection);
+            return collector;
         }
     }
 }
