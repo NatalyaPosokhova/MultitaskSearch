@@ -60,6 +60,34 @@ namespace MultitaskSearch.Tests
             Assert.AreEqual(expected, actual);
         }
 
+        [Test]
+        public void QueueIsEmptyResultShouldBeZero()
+        {
+            //arrange
+            int expected = 0;
+
+            //act
+            int actual = intermediateQueue.Count();
+
+            //assert
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void QueueIsNotEmptyResultShouldBeTwo()
+        {
+            //arrange
+            int expected = 2;
+            intermediateQueue.Put("firstValue", 46);
+            intermediateQueue.Put("secondValue", 52);
+
+            //act
+            int actual = intermediateQueue.Count();
+
+            //assert
+            Assert.AreEqual(expected, actual);
+        }
+
 
     }
 }

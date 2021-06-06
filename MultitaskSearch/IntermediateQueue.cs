@@ -26,5 +26,10 @@ namespace MultitaskSearch
         {
             throw new NotImplementedException();
         }
+
+        public int Count()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
