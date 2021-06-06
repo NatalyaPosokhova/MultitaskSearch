@@ -46,6 +46,20 @@ namespace MultitaskSearch.Tests
             Assert.AreEqual(expected, actual);
         }
 
+        [Test]
+        public void ReadNumberDetachedTasksShouldBeCorrect()
+        {
+            //arrange
+            int expected = 2;
+            //act
+            intermediateQueue.DetachTask();
+            intermediateQueue.DetachTask();
+            int actual = intermediateQueue.GetNumberDetachTasks();
+
+            //assert
+            Assert.AreEqual(expected, actual);
+        }
+
 
     }
 }

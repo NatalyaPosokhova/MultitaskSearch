@@ -16,5 +16,15 @@ namespace MultitaskSearch
         {
             throw new NotImplementedException();
         }
+
+        public void DetachTask()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GetNumberDetachTasks()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
