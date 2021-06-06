@@ -88,6 +88,14 @@ namespace MultitaskSearch.Tests
             Assert.AreEqual(expected, actual);
         }
 
+        [Test] 
+        public void TryGetElementsFromEmptyQueueShouldBeException()
+        {
+            //arrange
+            //act
+            //assert
+            Assert.Throws<IntermediateQueueException>(() => intermediateQueue.Get());          
+        }
 
     }
 }
