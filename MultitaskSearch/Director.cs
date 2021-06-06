@@ -12,12 +12,12 @@ namespace MultitaskSearch
 
         }
 
-        public override Task<Dictionary<string, IList<int>>> CreateCollector(IntermediateCollection intermediateCollection)
+        public override Task<Dictionary<string, IList<int>>> CreateCollector(IntermediateQueue intermediateQueue)
         {
             throw new NotImplementedException();
         }
 
-        public override void CreateSearcher(Chunk chunk, IntermediateCollection intermediateCollection)
+        public override void CreateSearcher(Chunk chunk, IntermediateQueue intermediateQueue)
         {
             throw new NotImplementedException();
         }

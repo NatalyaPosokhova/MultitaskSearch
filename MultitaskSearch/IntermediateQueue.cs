@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace MultitaskSearch
 {
-    public class IntermediateCollection
+    public class IntermediateQueue
     {
         public void Put(string word, int position)
         {

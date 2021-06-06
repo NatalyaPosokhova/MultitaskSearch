@@ -6,30 +6,32 @@ using System.Linq;
 
 namespace MultitaskSearch.Tests
 {
-    public class IntermediateCollectionTests
+    public class IntermediateQueueTests
     {
-        private IntermediateCollection intermediateCollection;
+        private IntermediateQueue intermediateQueue;
 
         [SetUp]
         public void Setup()
         {
-            intermediateCollection = new IntermediateCollection();
+            intermediateQueue = new IntermediateQueue();
         }
 
         [Test]
         public void InsertWordAndPositionToQueueShouldBeCorrect()
         {
             //arrange            
-            intermediateCollection.Put("abcd", 25);
+            intermediateQueue.Put("abcd", 25);
             KeyValuePair<string, int> expected = new KeyValuePair<string, int>("abcd", 25);
 
             //act
-            KeyValuePair<string, int> actual = intermediateCollection.Get();
+            KeyValuePair<string, int> actual = intermediateQueue.Get();
 
             //assert
             Assert.AreEqual(expected, actual);
-
         }
+
+       
+
        
     }
 }

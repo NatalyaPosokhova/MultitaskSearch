@@ -32,8 +32,8 @@ namespace MultitaskSearch.Tests
             await director.GetWordsPositions();
 
             //assert
-            await director.Received(1).CreateCollector(Arg.Any<IntermediateCollection>());
-            director.Received(1).CreateSearcher(Arg.Any<Chunk>(), Arg.Any<IntermediateCollection>());                              
+            await director.Received(1).CreateCollector(Arg.Any<IntermediateQueue>());
+            director.Received(1).CreateSearcher(Arg.Any<Chunk>(), Arg.Any<IntermediateQueue>());                              
         }
 
         [Test]
@@ -51,8 +51,8 @@ namespace MultitaskSearch.Tests
             await director.GetWordsPositions();
 
             //assert
-            await director.Received(1).CreateCollector(Arg.Any<IntermediateCollection>());
-            director.Received(2).CreateSearcher(Arg.Any<Chunk>(), Arg.Any<IntermediateCollection>());
+            await director.Received(1).CreateCollector(Arg.Any<IntermediateQueue>());
+            director.Received(2).CreateSearcher(Arg.Any<Chunk>(), Arg.Any<IntermediateQueue>());
         }
 
         [Test]
@@ -67,8 +67,8 @@ namespace MultitaskSearch.Tests
 
             Chunk[] actuals = new Chunk[2];
 
-            director.When(x => x.CreateSearcher(Arg.Is(chunk1), Arg.Any<IntermediateCollection>())).Do(x =>actuals[0] =  x.ArgAt<Chunk>(0));
-            director.When(x => x.CreateSearcher(Arg.Is(chunk2), Arg.Any<IntermediateCollection>())).Do(x => actuals[1] = x.ArgAt<Chunk>(0));
+            director.When(x => x.CreateSearcher(Arg.Is(chunk1), Arg.Any<IntermediateQueue>())).Do(x =>actuals[0] =  x.ArgAt<Chunk>(0));
+            director.When(x => x.CreateSearcher(Arg.Is(chunk2), Arg.Any<IntermediateQueue>())).Do(x => actuals[1] = x.ArgAt<Chunk>(0));
 
             //act
             await director.GetWordsPositions();
