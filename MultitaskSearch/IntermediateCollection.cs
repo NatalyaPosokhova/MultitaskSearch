@@ -7,13 +7,12 @@ namespace MultitaskSearch
 {
     public class IntermediateCollection
     {
-
-        public async Task<Dictionary<string, IList<int>>> GetSearchResults()
+        public void Put(string word, int position)
         {
             throw new NotImplementedException();
         }
 
-        public void InsertDataToQueue(KeyValuePair<string, int> wordAndPositionPair)
+        public KeyValuePair<string, int> Get()
         {
             throw new NotImplementedException();
         }
