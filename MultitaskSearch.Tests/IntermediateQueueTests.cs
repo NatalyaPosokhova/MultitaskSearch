@@ -30,8 +30,22 @@ namespace MultitaskSearch.Tests
             Assert.AreEqual(expected, actual);
         }
 
-       
+       [Test]
+       public void InsertTwoWordsAndPositionsSecondShouldBeCorrect()
+        {
+            //arrange    
+            intermediateQueue.Put("firstValue", 46);
+            intermediateQueue.Put("secondValue", 52);
+            KeyValuePair<string, int> expected = new KeyValuePair<string, int>("secondValue", 52);
 
-       
+            //act
+            intermediateQueue.Get();
+            KeyValuePair<string, int> actual = intermediateQueue.Get();
+
+            //assert
+            Assert.AreEqual(expected, actual);
+        }
+
+
     }
 }
