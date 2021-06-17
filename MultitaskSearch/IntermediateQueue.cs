@@ -7,14 +7,16 @@ namespace MultitaskSearch
 {
     public class IntermediateQueue
     {
+        private KeyValuePair<string, int> _keyValuePair;
+
         public void Put(string word, int position)
         {
-            throw new NotImplementedException();
+            _keyValuePair = new KeyValuePair<string, int>(word, position);
         }
 
         public KeyValuePair<string, int> Get()
         {
-            throw new NotImplementedException();
+            return _keyValuePair;
         }
 
         public void DetachTask()
