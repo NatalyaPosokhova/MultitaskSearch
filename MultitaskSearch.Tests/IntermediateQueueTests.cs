@@ -48,17 +48,28 @@ namespace MultitaskSearch.Tests
         }
 
         [Test]
-        public void ReadNumberDetachedTasksShouldBeCorrect()
+        public void InsertTwoWordsAndPositionsTheyShouldBeInQueue()
         {
             //arrange
-            int expected = 2;
+            KeyValuePair<string, int> expected1 = new KeyValuePair<string, int>("firstValue", 46);
+            KeyValuePair<string, int> expected2 = new KeyValuePair<string, int>("secondValue", 52);
             //act
-            intermediateQueue.DetachTask();
-            intermediateQueue.DetachTask();
-            int actual = intermediateQueue.GetNumberDetachTasks();
-
+            Thread th1 = new Thread(() => intermediateQueue.Put("firstValue", 46));
+            Thread th2 = new Thread(() => intermediateQueue.Put("secondValue", 52));
+            th1.Start();
+            th2.Start();
+            th1.Join();
+            th2.Join();
             //assert
-            Assert.AreEqual(expected, actual);
+
+            List<KeyValuePair<string, int>> actual = new List<KeyValuePair<string, int>> 
+            {
+                intermediateQueue.Get(),
+                intermediateQueue.Get()
+            };
+
+            Assert.IsTrue(actual.Contains(expected1));
+            Assert.IsTrue(actual.Contains(expected2));
         }
 
         [Test]
