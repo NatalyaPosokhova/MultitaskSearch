@@ -3,6 +3,7 @@ using NSubstitute;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace MultitaskSearch.Tests
 {
@@ -101,13 +102,16 @@ namespace MultitaskSearch.Tests
         public void TaskIsDetachedShouldBeCorrectCounter()
         {
             //arrange
-            intermediateQueue.Put("firstValue", 46);
-            intermediateQueue.Put("secondValue", 52);
             int expected = 2;
 
             //act
-            intermediateQueue.DetachTask();
-            intermediateQueue.DetachTask();
+            Thread th1 = new Thread(() => intermediateQueue.DetachTask());
+            Thread th2 = new Thread(() => intermediateQueue.DetachTask());
+            th1.Start();
+            th2.Start();
+            th1.Join();
+            th2.Join();
+
             int actual = intermediateQueue.CountDetachedTasks();
 
             //assert
