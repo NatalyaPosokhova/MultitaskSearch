@@ -7,6 +7,7 @@ namespace MultitaskSearch
 {
     public class IntermediateQueue
     {
+        
         public void Put(string word, int position)
         {
             throw new NotImplementedException();
@@ -28,6 +29,11 @@ namespace MultitaskSearch
         }
 
         public int Count()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int CountDetachedTasks()
         {
             throw new NotImplementedException();
         }

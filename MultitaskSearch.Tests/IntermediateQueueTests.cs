@@ -97,5 +97,22 @@ namespace MultitaskSearch.Tests
             Assert.Throws<IntermediateQueueException>(() => intermediateQueue.Get());          
         }
 
+        [Test]
+        public void TaskIsDetachedShouldBeCorrectCounter()
+        {
+            //arrange
+            intermediateQueue.Put("firstValue", 46);
+            intermediateQueue.Put("secondValue", 52);
+            int expected = 2;
+
+            //act
+            intermediateQueue.DetachTask();
+            intermediateQueue.DetachTask();
+            int actual = intermediateQueue.CountDetachedTasks();
+
+            //assert
+            Assert.AreEqual(expected, actual);
+        }
+
     }
 }
