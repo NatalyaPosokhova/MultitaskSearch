@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace MultitaskSearch.Tests
 {
-    public class DirectorTest
+    public class DirectorTests
     {
         private IDataProvider provider;
         private AbstractDirector director;
