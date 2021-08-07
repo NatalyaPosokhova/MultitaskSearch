@@ -20,7 +20,7 @@ namespace MultitaskSearch
             _searchWords = searchWords;
         }
 
-        public abstract void CreateSearcher(Chunk chunk, IntermediateQueue intermediateQueue);
+        public abstract void StartSearcher(Chunk chunk, IntermediateQueue intermediateQueue);
         public abstract Task<Dictionary<string, IList<int>>> CreateCollector(IntermediateQueue intermediateQueue);
         public async Task<Dictionary<string, IList<int>>> GetWordsPositions()
         {
@@ -28,7 +28,7 @@ namespace MultitaskSearch
             while (_provider.IsDataExists())
             {
                 Chunk chunk = _provider.GetData(_blockSize);
-                CreateSearcher(chunk, intermediateQueue);
+                StartSearcher(chunk, intermediateQueue);
             }
 
             var collector = await CreateCollector(intermediateQueue);
