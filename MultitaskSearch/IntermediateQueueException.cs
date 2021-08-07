@@ -6,5 +6,6 @@ namespace MultitaskSearch
 {
     public class IntermediateQueueException : Exception
     {
+        public IntermediateQueueException(string message) : base(message) {}
     }
 }

@@ -25,25 +25,26 @@ namespace MultitaskSearch.Tests
             KeyValuePair<string, int> expected = new KeyValuePair<string, int>("abcd", 25);
 
             //act
-            KeyValuePair<string, int> actual = intermediateQueue.Get();
+            KeyValuePair<string, int> actual;
 
             //assert
+            Assert.IsTrue(intermediateQueue.Get(out actual));
             Assert.AreEqual(expected, actual);
         }
 
        [Test]
-       public void InsertTwoWordsAndPositionsSecondShouldBeCorrect()
+       public void InsertTwoWordsAndPositionsFirstShouldBeCorrect()
         {
             //arrange    
             intermediateQueue.Put("firstValue", 46);
             intermediateQueue.Put("secondValue", 52);
-            KeyValuePair<string, int> expected = new KeyValuePair<string, int>("secondValue", 52);
+            KeyValuePair<string, int> expected = new KeyValuePair<string, int>("firstValue", 46);
 
             //act
-            intermediateQueue.Get();
-            KeyValuePair<string, int> actual = intermediateQueue.Get();
+            KeyValuePair<string, int> actual;
 
             //assert
+            Assert.IsTrue(intermediateQueue.Get(out actual));
             Assert.AreEqual(expected, actual);
         }
 
@@ -60,16 +61,16 @@ namespace MultitaskSearch.Tests
             th2.Start();
             th1.Join();
             th2.Join();
+
             //assert
 
-            List<KeyValuePair<string, int>> actual = new List<KeyValuePair<string, int>> 
-            {
-                intermediateQueue.Get(),
-                intermediateQueue.Get()
-            };
+            KeyValuePair<string, int> actual1;
+            KeyValuePair<string, int> actual2;
 
-            Assert.IsTrue(actual.Contains(expected1));
-            Assert.IsTrue(actual.Contains(expected2));
+            Assert.IsTrue(intermediateQueue.Get(out actual1));
+            Assert.AreEqual(expected1, actual1);
+            Assert.IsTrue(intermediateQueue.Get(out actual2));
+            Assert.AreEqual(expected2, actual2);
         }
 
         [Test]
@@ -106,7 +107,8 @@ namespace MultitaskSearch.Tests
             //arrange
             //act
             //assert
-            Assert.Throws<IntermediateQueueException>(() => intermediateQueue.Get());          
+            KeyValuePair<string, int> actual;
+            Assert.Throws<IntermediateQueueException>(() => intermediateQueue.Get(out actual));          
         }
 
         [Test]

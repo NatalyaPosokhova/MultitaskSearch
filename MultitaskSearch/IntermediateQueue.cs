@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,35 +8,38 @@ namespace MultitaskSearch
 {
     public class IntermediateQueue
     {
-        
+        private readonly ConcurrentQueue<KeyValuePair<string, int>> _queue = new ConcurrentQueue<KeyValuePair<string, int>>();
+        private int numberDequeueTasks = 0;
+
+
         public void Put(string word, int position)
         {
-            throw new NotImplementedException();
+            KeyValuePair<string, int> item = new KeyValuePair<string, int>(word, position);
+            _queue.Enqueue(item);
         }
 
-        public KeyValuePair<string, int> Get()
+        public bool Get(out KeyValuePair<string, int> result)
         {
-            throw new NotImplementedException();
+            if(_queue.IsEmpty)
+            {
+                throw new IntermediateQueueException("Queue is empty.");
+            }
+           return _queue.TryDequeue(out result);            
         }
 
         public void DetachTask()
         {
-            throw new NotImplementedException();
-        }
-
-        public int GetNumberDetachTasks()
-        {
-            throw new NotImplementedException();
+            numberDequeueTasks++;
         }
 
         public int Count()
         {
-            throw new NotImplementedException();
+            return _queue.Count;
         }
 
         public int CountDetachedTasks()
         {
-            throw new NotImplementedException();
+            return numberDequeueTasks;
         }
     }
 }
