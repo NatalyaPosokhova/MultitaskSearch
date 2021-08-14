@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
+[assembly: InternalsVisibleTo("MultitaskSearch.Tests")]
 namespace MultitaskSearch
 {
     public class IntermediateQueue
@@ -40,6 +42,11 @@ namespace MultitaskSearch
         public int CountDetachedTasks()
         {
             return numberDequeueTasks;
+        }
+
+        internal ConcurrentQueue<KeyValuePair<string, int>> GetQueue()
+        {
+            throw new NotImplementedException();
         }
     }
 }
