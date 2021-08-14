@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace MultitaskSearch
@@ -19,7 +20,26 @@ namespace MultitaskSearch
 
         public void FindWordsAndPositions()
         {
-            throw new NotImplementedException();
+            List<char> word = new List<char>();
+            for (int i = 0; i < _chunk.Content.Length; i++)
+            {
+                if(_chunk.Content[i] != ' ')
+                {
+                    word.Add(_chunk.Content[i]);
+                }
+                else
+                {
+                    if(word.Count > 0)
+                    {
+                        if(_searchWords.Contains(word.ToString()))
+                        {
+                            _intermediateQueue.Put(word.ToString(), i + _chunk.StartIndex);
+                        }
+                    }
+                }
+
+            }
+
         }
     }
 }
