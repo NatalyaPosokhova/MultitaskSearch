@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -73,5 +74,11 @@ namespace MultitaskSearch
             return true;
         }
 
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            _queue.ToList().ForEach(x => sb.Append($"(Key: {x.Key} Value: {x.Value}) "));
+            return sb.ToString();
+        }
     }
 }
