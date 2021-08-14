@@ -12,7 +12,14 @@ namespace MultitaskSearch
     {
         private readonly ConcurrentQueue<KeyValuePair<string, int>> _queue = new ConcurrentQueue<KeyValuePair<string, int>>();
         private int numberDequeueTasks = 0;
+        internal IntermediateQueue(ConcurrentQueue<KeyValuePair<string, int>> concurrentQueue)
+        {
+            _queue = concurrentQueue;
+        }
+        public IntermediateQueue()
+        {
 
+        }
 
         public void Put(string word, int position)
         {
@@ -44,9 +51,27 @@ namespace MultitaskSearch
             return numberDequeueTasks;
         }
 
-        internal ConcurrentQueue<KeyValuePair<string, int>> GetQueue()
+        public override bool Equals(object obj)
         {
-            throw new NotImplementedException();
+            IntermediateQueue secondQueue = (IntermediateQueue)obj;
+            var l1 = _queue.ToArray();
+            var l2 = secondQueue._queue.ToArray();
+
+            if(l1.Length != l2.Length)
+            {
+                return false;
+            }
+
+            for (int i = 0; i <l1.Length; i++)
+            {
+                if(l1[i].Key != l2[i].Key || l1[i].Value != l2[i].Value)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
+
     }
 }
