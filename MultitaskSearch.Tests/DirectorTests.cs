@@ -65,17 +65,12 @@ namespace MultitaskSearch.Tests
             provider.GetData(blockSize).Returns(chunk1, chunk2);
             provider.IsDataExists().Returns(true, true, false);
 
-            Chunk[] actuals = new Chunk[2];
-
-            director.When(x => x.StartSearcher(Arg.Any<string[]>(), Arg.Is(chunk1), Arg.Any<IntermediateQueue>())).Do(x =>actuals[0] =  x.ArgAt<Chunk>(0));
-            director.When(x => x.StartSearcher(Arg.Any<string[]>(), Arg.Is(chunk2), Arg.Any<IntermediateQueue>())).Do(x => actuals[1] = x.ArgAt<Chunk>(0));
-
             //act
             await director.GetWordsPositions();
 
             //assert
-            Assert.AreEqual(chunk1, actuals[0]);
-            Assert.AreEqual(chunk2, actuals[1]);
+            director.Received().StartSearcher(Arg.Any<string[]>(), chunk1, Arg.Any<IntermediateQueue>());
+            director.Received().StartSearcher(Arg.Any<string[]>(), chunk2, Arg.Any<IntermediateQueue>());
         }
 
         //[Test]
