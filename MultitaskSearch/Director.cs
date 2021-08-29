@@ -7,7 +7,7 @@ namespace MultitaskSearch
 {
     public class Director : AbstractDirector
     {
-        public Director(IDataProvider provider, int blockSize, string[] searchWords) : base(provider,blockSize, searchWords)
+        public Director(IEnumerable<Chunk> chunks, string[] searchWords) : base(chunks, searchWords)
         {
 
         }

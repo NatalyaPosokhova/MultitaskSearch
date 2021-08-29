@@ -7,15 +7,13 @@ namespace MultitaskSearch
 {
     public abstract class AbstractDirector
     {
-        private readonly IDataProvider _provider;
-        private readonly int _blockSize;
+        private readonly IEnumerable<Chunk> _chunks;
         protected readonly IntermediateQueue _collector;
         private readonly string[] _searchWords;
         
-        public AbstractDirector(IDataProvider provider, int blockSize, string[] searchWords)
+        public AbstractDirector(IEnumerable<Chunk> chunks, string[] searchWords)
         {
-            _provider = provider;
-            _blockSize = blockSize;
+            _chunks = chunks;
             _collector = new IntermediateQueue();
             _searchWords = searchWords;
         }
@@ -25,9 +23,8 @@ namespace MultitaskSearch
         public async Task<Dictionary<string, IList<int>>> GetWordsPositions()
         {
             IntermediateQueue intermediateQueue = new IntermediateQueue();
-            while (_provider.IsDataExists())
+            foreach(var chunk in _chunks)
             {
-                Chunk chunk = _provider.GetData(_blockSize);
                 StartSearcher(_searchWords, chunk, intermediateQueue);
             }
 
