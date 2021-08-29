@@ -17,7 +17,7 @@ namespace MultitaskSearch
             throw new NotImplementedException();
         }
 
-        public override void StartSearcher(Chunk chunk, IntermediateQueue intermediateQueue)
+        public override void StartSearcher(string[] searchWords, Chunk chunk, IntermediateQueue intermediateQueue)
         {
             throw new NotImplementedException();
         }
