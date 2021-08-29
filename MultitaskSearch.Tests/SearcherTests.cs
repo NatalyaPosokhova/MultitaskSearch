@@ -19,24 +19,24 @@ namespace MultitaskSearch.Tests
         {
             yield return new TestCaseData(new string[] { "abc" }, new Chunk() { StartIndex = 0, Content = " fds abc tyu" },
                 new IntermediateQueue(new ConcurrentQueue<KeyValuePair<string, int>>(
-                    new List<KeyValuePair<string, int>>() { new KeyValuePair<string, int>("abc", 6) })));
+                    new List<KeyValuePair<string, int>>() { new KeyValuePair<string, int>("abc", 5) })));
 
-            yield return new TestCaseData(new string[] { "abc, def" }, new Chunk() { StartIndex = 0, Content = "abc tyu" },
+            yield return new TestCaseData(new string[] { "abc", "def" }, new Chunk() { StartIndex = 0, Content = "abc tyu" },
                 new IntermediateQueue(new ConcurrentQueue<KeyValuePair<string, int>>(
-                    new List<KeyValuePair<string, int>>() { new KeyValuePair<string, int>("abc", 1) })));
+                    new List<KeyValuePair<string, int>>() { new KeyValuePair<string, int>("abc", 0) })));
 
-            yield return new TestCaseData(new string[] { "abc, def" }, new Chunk() { StartIndex = 14, Content = " fds def tyu abc" },
+            yield return new TestCaseData(new string[] { "abc", "def" }, new Chunk() { StartIndex = 14, Content = " fds def tyu abc" },
                 new IntermediateQueue(new ConcurrentQueue<KeyValuePair<string, int>>(
-                    new List<KeyValuePair<string, int>>() { new KeyValuePair<string, int>("abc", 28), 
-                    new KeyValuePair<string, int>("def", 6) })));
+                    new List<KeyValuePair<string, int>>() {new KeyValuePair<string, int>("def", 19),
+                        new KeyValuePair<string, int>("abc", 27) })));
 
-            yield return new TestCaseData(new string[] { "abc, def" }, new Chunk() { StartIndex = 0, Content = " fds deft tyuabc" },
+            yield return new TestCaseData(new string[] { "abc", "def" }, new Chunk() { StartIndex = 0, Content = " fds deft tyuabc" },
                 new IntermediateQueue(new ConcurrentQueue<KeyValuePair<string, int>>()));
 
-            yield return new TestCaseData(new string[] { "abc, def" }, new Chunk() { StartIndex = 0, Content = " fds deft tyuabc" },
+            yield return new TestCaseData(new string[] { "abc", "def" }, new Chunk() { StartIndex = 0, Content = " fds deft tyuabc" },
                 new IntermediateQueue(new ConcurrentQueue<KeyValuePair<string, int>>()));
 
-            yield return new TestCaseData(new string[] { "abc, def" }, new Chunk() { StartIndex = 0, Content = "" },
+            yield return new TestCaseData(new string[] { "abc", "def" }, new Chunk() { StartIndex = 0, Content = "" },
                 new IntermediateQueue(new ConcurrentQueue<KeyValuePair<string, int>>()));
 
         }

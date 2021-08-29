@@ -21,6 +21,7 @@ namespace MultitaskSearch
         public void FindWordsAndPositions()
         {
             List<char> word = new List<char>();
+            string wordStr;
             for (int i = 0; i < _chunk.Content.Length; i++)
             {
                 if(_chunk.Content[i] != ' ')
@@ -31,15 +32,22 @@ namespace MultitaskSearch
                 {
                     if(word.Count > 0)
                     {
-                        if(_searchWords.Contains(word.ToString()))
+                        wordStr = new string(word.ToArray()).ToString();
+                        if (_searchWords.Contains(wordStr))
                         {
-                            _intermediateQueue.Put(word.ToString(), i + _chunk.StartIndex);
+                            _intermediateQueue.Put(wordStr, i - wordStr.Length + _chunk.StartIndex);
                         }
                     }
+                    word.Clear();
                 }
 
             }
 
+            wordStr = new string(word.ToArray());
+            if (_searchWords.Contains(wordStr))
+            {
+                _intermediateQueue.Put(wordStr, _chunk.Content.Length - wordStr.Length + _chunk.StartIndex);
+            }
         }
     }
 }
