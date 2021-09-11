@@ -9,7 +9,8 @@ namespace MultitaskSearch.Tests
 {
     public class FileProviderTests
     {//Написать приватный метод, который создаёт временный файл, в конце удалить
-        string filePath = "../../../testProvider.txt";
+        private readonly string filePath = "../../../testProvider.txt";
+
         [TearDown]
         public void CleanUp()
         {
