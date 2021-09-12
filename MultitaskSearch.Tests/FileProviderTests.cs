@@ -54,6 +54,13 @@ namespace MultitaskSearch.Tests
             int expectedStartIndex2 = 6;
             int expectedStartIndex3 = 12;
 
+            Chunk[] expectedChunks = new Chunk[]
+            {
+                new Chunk { StartIndex = expectedStartIndex1, Content = expectedContent1 },
+                new Chunk { StartIndex = expectedStartIndex2, Content = expectedContent2 },
+                new Chunk { StartIndex = expectedStartIndex3, Content = expectedContent3 }
+            };
+
             CreateTestData(fileData);
             FileProvider fileProvider = new FileProvider(filePath, dataSize);
 
@@ -66,14 +73,9 @@ namespace MultitaskSearch.Tests
             } while (fileProvider.MoveNext());
 
             //assert
-            Assert.AreEqual(3, actualChunks.Count);
-            Assert.AreEqual(expectedContent1, actualChunks[0].Content);
-            Assert.AreEqual(expectedStartIndex1, actualChunks[0].StartIndex);
-            Assert.AreEqual(expectedContent2, actualChunks[1].Content);
-            Assert.AreEqual(expectedStartIndex2, actualChunks[1].StartIndex);
-            Assert.AreEqual(expectedContent3, actualChunks[2].Content);
-            Assert.AreEqual(expectedStartIndex3, actualChunks[2].StartIndex);
+            Assert.AreEqual(expectedChunks, actualChunks);
         }
+
         [Test]
         public void TryReadDataFromUnexistedFileShouldBeException()
         {
