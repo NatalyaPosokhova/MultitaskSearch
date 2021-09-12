@@ -6,68 +6,59 @@ using System.Text;
 
 namespace MultitaskSearch
 {
-    public class FileProvider : IEnumerable<Chunk>, IEnumerator<Chunk>
+    public class FileProvider : IEnumerable<Chunk>
     {
         private readonly string _filePath;
         private readonly int _dataSize;
-
+     
         public FileProvider(string filePath, int dataSize)
         {
             _filePath = filePath;
             _dataSize = dataSize;
-        }
-
-        private IEnumerable<Chunk> CalculateChunks()
-        {
-            IEnumerable<Chunk> chunks = new List<Chunk>();
-            try
-            {
-                string text = File.ReadAllText(_filePath);
-                int startIndex = 0;
-                do
-                {
-                    Chunk chunk = new Chunk();
-                    char[] content = new char[] { };
-                    for (int i = startIndex; i < _dataSize || i < text.Length; i++)
-                    {
-                      
-                    }
-                } while (!text.Contains(string.Empty));
-
-            }
-            catch(Exception ex)
-            {
-                throw new FileNotFoundException(ex + ": cannot read data from file " + _filePath);
-            }
-            return chunks;
-        }
-        public Chunk Current => throw new NotImplementedException();
-
-        object IEnumerator.Current => throw new NotImplementedException();
-
-        public void Dispose()
-        {
-            throw new NotImplementedException();
+          
         }
 
         public IEnumerator<Chunk> GetEnumerator()
         {
-            throw new NotImplementedException();
+            return GetChunks().GetEnumerator();
         }
 
-        public bool MoveNext()
+        private IEnumerable<Chunk> GetChunks()
         {
-            throw new NotImplementedException();
-        }
+            IEnumerable<Chunk> chunks = new List<Chunk>();
+            string text = string.Empty;
+            try
+            {
+                text = File.ReadAllText(_filePath);
+            }
+            catch (Exception ex)
+            {
+                throw new FileNotFoundException(ex + ": cannot read data from file " + _filePath);
+            }
 
-        public void Reset()
-        {
-            throw new NotImplementedException();
+            string[] words = text.Split(new char[] { ' ', '.', ',', '!', '?', ':', ';', '[', ']', '(', ')' });
+            int startIndex = 0;
+
+            StringBuilder sb = new StringBuilder();
+            foreach (var word in words)
+            {
+                if (sb.Length == 0 || sb.Length + word.Length < _dataSize)
+                {
+                    sb.Append(word);
+                }
+                else
+                {
+                    Chunk chunk = new Chunk() { Content = sb.ToString(), StartIndex = startIndex };
+                    startIndex += sb.Length;
+                    sb.Clear();
+                    yield return chunk;
+                }
+            }
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            throw new NotImplementedException();
+            return GetChunks().GetEnumerator();
         }
     }
 }
