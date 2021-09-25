@@ -8,13 +8,11 @@ namespace MultitaskSearch
     public abstract class AbstractDirector
     {
         private readonly IEnumerable<Chunk> _chunks;
-        protected readonly IntermediateQueue _collector;
         private readonly string[] _searchWords;
         
         public AbstractDirector(IEnumerable<Chunk> chunks, string[] searchWords)
         {
             _chunks = chunks;
-            _collector = new IntermediateQueue();
             _searchWords = searchWords;
         }
 
