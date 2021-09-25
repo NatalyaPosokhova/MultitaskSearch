@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace MultitaskSearch
 {
@@ -20,13 +21,16 @@ namespace MultitaskSearch
 
         public IEnumerator<Chunk> GetEnumerator()
         {
-            return GetChunks().GetEnumerator();
+            var result = GetChunks();
+            return result.GetEnumerator();
         }
 
         private IEnumerable<Chunk> GetChunks()
         {
-            IEnumerable<Chunk> chunks = new List<Chunk>();
             string text = string.Empty;
+            StringBuilder sb = new StringBuilder();
+            var notAlfabeticSymbol = @"\W";
+
             try
             {
                 text = File.ReadAllText(_filePath);
@@ -36,29 +40,25 @@ namespace MultitaskSearch
                 throw new FileNotFoundException(ex + ": cannot read data from file " + _filePath);
             }
 
-            string[] words = text.Split(new char[] { ' ', '.', ',', '!', '?', ':', ';', '[', ']', '(', ')' });
-            int startIndex = 0;
+            if (text.Length == 0)
+                yield break;
 
-            StringBuilder sb = new StringBuilder();
-            foreach (var word in words)
+            for (int i = 0; i < text.Length; i++)
             {
-                if (sb.Length == 0 || sb.Length + word.Length < _dataSize)
+                sb.Append(text[i]);
+                if (Regex.IsMatch(text[i].ToString(), notAlfabeticSymbol) && sb.Length >= _dataSize || i == text.Length - 1)
                 {
-                    sb.Append(word);
-                }
-                else
-                {
-                    Chunk chunk = new Chunk() { Content = sb.ToString(), StartIndex = startIndex };
-                    startIndex += sb.Length;
+                    Chunk chunk = new Chunk { Content = sb.ToString(), StartIndex = i - sb.Length + 1 };
                     sb.Clear();
                     yield return chunk;
                 }
-            }
+            }            
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetChunks().GetEnumerator();
+            var result = this.GetChunks();
+            return result.GetEnumerator();
         }
     }
 }
