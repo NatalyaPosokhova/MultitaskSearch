@@ -7,15 +7,15 @@ namespace MultitaskSearch.Tests
 {
     public class DirectorTests
     {
-        private IDataProvider provider;
+        private List<Chunk> chunks;
         private AbstractDirector director;
         private int blockSize = 3;
 
         [SetUp]
         public void Setup() 
         {
-            provider = Substitute.For<IDataProvider>();
-            director = Substitute.For<AbstractDirector>(provider, blockSize, new string[] { "abc"});
+            chunks = new List<Chunk>();
+            director = Substitute.For<AbstractDirector>(chunks, new string[] { "abc"});
         }
 
         [Test]
@@ -23,10 +23,7 @@ namespace MultitaskSearch.Tests
         {
             //arrange
             blockSize = 5;
-            var chunk = new Chunk() { StartIndex = 0, Content = "abc d" };
-
-            provider.GetData(blockSize).Returns(chunk);
-            provider.IsDataExists().Returns( true, false );
+            chunks.Add(new Chunk() { StartIndex = 0, Content = "abc d" });
 
             //act
             await director.GetWordsPositions();
@@ -41,11 +38,8 @@ namespace MultitaskSearch.Tests
         {
             //arrange
             blockSize = 3;
-            var chunk1 = new Chunk() { StartIndex = 0, Content = "qwe" };
-            var chunk2 = new Chunk() { StartIndex = 3, Content = "rty" };
-
-            provider.GetData(blockSize).Returns(chunk1, chunk2);
-            provider.IsDataExists().Returns(true, true, false);
+            chunks.Add(new Chunk() { StartIndex = 0, Content = "qwe" });
+            chunks.Add(new Chunk() { StartIndex = 3, Content = "rty" });
 
             //act
             await director.GetWordsPositions();
@@ -59,18 +53,15 @@ namespace MultitaskSearch.Tests
         public async Task TransferChunkToSearcherShouldBeCorrect()
         {
             //arrange
-            var chunk1 = new Chunk() { StartIndex = 0, Content = "qwe" };
-            var chunk2 = new Chunk() { StartIndex = 3, Content = "rty" };
-
-            provider.GetData(blockSize).Returns(chunk1, chunk2);
-            provider.IsDataExists().Returns(true, true, false);
+            chunks.Add(new Chunk() { StartIndex = 0, Content = "qwe" });
+            chunks.Add(new Chunk() { StartIndex = 3, Content = "rty" });
 
             //act
             await director.GetWordsPositions();
 
             //assert
-            director.Received().StartSearcher(Arg.Any<string[]>(), chunk1, Arg.Any<IntermediateQueue>());
-            director.Received().StartSearcher(Arg.Any<string[]>(), chunk2, Arg.Any<IntermediateQueue>());
+            director.Received().StartSearcher(Arg.Any<string[]>(), chunks[0], Arg.Any<IntermediateQueue>());
+            director.Received().StartSearcher(Arg.Any<string[]>(), chunks[1], Arg.Any<IntermediateQueue>());
         }
 
         //[Test]
