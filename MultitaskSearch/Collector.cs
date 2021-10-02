@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace MultitaskSearch
@@ -16,7 +17,24 @@ namespace MultitaskSearch
 
         internal Dictionary<string, List<int>> GetWordsAndPositionsList()
         {
-            throw new NotImplementedException();
+            Dictionary<string, List<int>> result = new Dictionary<string, List<int>>();
+            List<KeyValuePair<string, int>> keyValuePairsList = new List<KeyValuePair<string, int>>();
+            int numSearchResults = _intermediateQueue.Count();
+
+            if (numSearchResults == 0)
+                return result;
+
+            KeyValuePair<string, int> keyValuePair;
+            for (int i = 0; i < numSearchResults; i++)
+            {
+                _intermediateQueue.Get(out keyValuePair);
+                if(keyValuePair.Key != null)
+                {
+                    keyValuePairsList.Add(keyValuePair);
+                }
+            }
+
+            return keyValuePairsList.GroupBy(pair => pair.Key, pair => pair.Value).ToDictionary(g => g.Key, g => g.ToList());  
         }
     }
 }
