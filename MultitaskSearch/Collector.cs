@@ -19,20 +19,24 @@ namespace MultitaskSearch
         {
             Dictionary<string, List<int>> result = new Dictionary<string, List<int>>();
             List<KeyValuePair<string, int>> keyValuePairsList = new List<KeyValuePair<string, int>>();
-            int numSearchResults = _intermediateQueue.Count();
 
-            if (numSearchResults == 0)
-                return result;
-
-            KeyValuePair<string, int> keyValuePair;
-            for (int i = 0; i < numSearchResults; i++)
+            do
             {
-                _intermediateQueue.Get(out keyValuePair);
-                if(keyValuePair.Key != null)
+                int numSearchResults = _intermediateQueue.Count();
+
+                if (numSearchResults == 0)
+                    continue;
+
+                KeyValuePair<string, int> keyValuePair;
+                for (int i = 0; i < numSearchResults; i++)
                 {
-                    keyValuePairsList.Add(keyValuePair);
+                    _intermediateQueue.Get(out keyValuePair);
+                    if (keyValuePair.Key != null)
+                    {
+                        keyValuePairsList.Add(keyValuePair);
+                    }
                 }
-            }
+            } while (_intermediateQueue.CountDetachedTasks() < _countChunks);
 
             return keyValuePairsList.GroupBy(pair => pair.Key, pair => pair.Value).ToDictionary(g => g.Key, g => g.ToList());  
         }
