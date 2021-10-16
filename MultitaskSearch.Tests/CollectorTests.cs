@@ -81,5 +81,20 @@ namespace MultitaskSearch.Tests
             //assert
             Assert.AreEqual(expected, actual);
         }        
+
+        [Test]
+        public void NoDetachedTasksShouldBeException()
+        {
+            //arrange
+            int countChunks = 0;
+            var collector = new Collector(intermediateQueue, countChunks);
+            Dictionary<string, List<int>> expected = new Dictionary<string, List<int>>();
+
+            //act
+            Dictionary<string, List<int>> actual = collector.GetWordsAndPositionsList();
+
+            //assert
+            Assert.AreEqual(expected, actual);
+        }
     }
 }
