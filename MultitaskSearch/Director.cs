@@ -12,7 +12,7 @@ namespace MultitaskSearch
 
         }
 
-        public override Task<Dictionary<string, IList<int>>> CreateCollector(IntermediateQueue intermediateQueue)
+        public override Task<Dictionary<string, IList<int>>> CreateCollector(IntermediateQueue intermediateQueue, int countChunks)
         {
             throw new NotImplementedException();
         }

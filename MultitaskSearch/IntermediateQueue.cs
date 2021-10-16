@@ -19,7 +19,7 @@ namespace MultitaskSearch
         }
         public IntermediateQueue()
         {
-
+            _queue = new ConcurrentQueue<KeyValuePair<string, int>>();
         }
 
         public void Put(string word, int position)
