@@ -18,7 +18,7 @@ namespace MultitaskSearch
         }
 
         public abstract void StartSearcher(string[] searchWords, Chunk chunk, IntermediateQueue intermediateQueue);
-        public abstract Task<Dictionary<string, IList<int>>> CreateCollector(IntermediateQueue intermediateQueue, int countChunks);
+        public abstract Task<Dictionary<string, IList<int>>> CreateCollectorAsync(IntermediateQueue intermediateQueue, int countChunks);
         public async Task<Dictionary<string, IList<int>>> GetWordsPositions()
         {
             IntermediateQueue intermediateQueue = new IntermediateQueue();
@@ -28,7 +28,7 @@ namespace MultitaskSearch
                 StartSearcher(_searchWords, chunk, intermediateQueue);
             }
 
-            var collector = await CreateCollector(intermediateQueue, countChunks);
+            var collector = await CreateCollectorAsync(intermediateQueue, countChunks);
             return collector;
         }
     }
