@@ -53,5 +53,21 @@ namespace MultitaskSearch.Tests
             //assert
             Assert.AreEqual(expected, _intermediateQueue);
         }
+
+        [Test]
+        public void CheckSearcherWasDetached()
+        {
+            //arrange
+            string[] searchWords = new string[] { "abc", "def" };
+            var chunk = new Chunk() { StartIndex = 0, Content = "abc ref" };
+            Searcher searcher = new Searcher(searchWords, chunk, _intermediateQueue);
+            int expected = 1;
+            //act
+            searcher.FindWordsAndPositions();
+
+            //assert
+            Assert.AreEqual(expected, _intermediateQueue.CountDetachedTasks());
+
+        }
     }
 }

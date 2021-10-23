@@ -48,6 +48,7 @@ namespace MultitaskSearch
             {
                 _intermediateQueue.Put(wordStr, _chunk.Content.Length - wordStr.Length + _chunk.StartIndex);
             }
+
         }
     }
 }
