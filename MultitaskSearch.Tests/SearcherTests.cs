@@ -38,6 +38,16 @@ namespace MultitaskSearch.Tests
 
             yield return new TestCaseData(new string[] { "abc", "def" }, new Chunk() { StartIndex = 0, Content = "" },
                 new IntermediateQueue(new ConcurrentQueue<KeyValuePair<string, int>>()));
+            
+            yield return new TestCaseData(new string[] { "abc", "def" }, new Chunk() { StartIndex = 0, Content = "de abc, tra abc" },
+                new IntermediateQueue(new ConcurrentQueue<KeyValuePair<string, int>>(
+                    new List<KeyValuePair<string, int>>() {new KeyValuePair<string, int>("abc", 3),
+                        new KeyValuePair<string, int>("abc", 12) })));
+
+            yield return new TestCaseData(new string[] { "abc", "def" }, new Chunk() { StartIndex = 0, Content = "de abc tra abc." },
+            new IntermediateQueue(new ConcurrentQueue<KeyValuePair<string, int>>(
+                new List<KeyValuePair<string, int>>() {new KeyValuePair<string, int>("abc", 3),
+                                new KeyValuePair<string, int>("abc", 11) })));
 
         }
         [Test]
@@ -67,7 +77,6 @@ namespace MultitaskSearch.Tests
 
             //assert
             Assert.AreEqual(expected, _intermediateQueue.CountDetachedTasks());
-
         }
     }
 }

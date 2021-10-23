@@ -14,10 +14,10 @@ namespace MultitaskSearch.Tests
             Director director = new Director(provider, new string[] { "Смоленска", "армия", "французы", "свои", "тест"});
             Dictionary<string, IList<int>> expected = new Dictionary<string, IList<int>> 
             {
-                { "Смоленска", new List<int>{ 801, 815, 4602 } },
-                { "армия", new List<int>{ 721 }},
-                { "французы", new List<int>{ 2667 } },
-                { "свои", new List<int>{ 2717, 2947 }}     
+                { "Смоленска", new List<int>{ 800, 814, 4601 } },
+                { "армия", new List<int>{ 720 }},
+                { "французы", new List<int>{ 2666 } },
+                { "свои", new List<int>{ 2716, 2946 }}     
             };
 
             //act
