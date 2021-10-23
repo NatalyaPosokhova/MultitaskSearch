@@ -29,7 +29,7 @@ namespace MultitaskSearch.Tests
             await director.GetWordsPositions();
 
             //assert
-            await director.Received(1).CreateCollector(Arg.Any<IntermediateQueue>(), 1);
+            await director.Received(1).CreateCollectorAsync(Arg.Any<IntermediateQueue>(), 1);
             director.Received(1).StartSearcher(Arg.Any<string[]>(), Arg.Any<Chunk>(), Arg.Any<IntermediateQueue>());                              
         }
 
@@ -45,7 +45,7 @@ namespace MultitaskSearch.Tests
             await director.GetWordsPositions();
 
             //assert
-            await director.Received(1).CreateCollector(Arg.Any<IntermediateQueue>(), 2);
+            await director.Received(1).CreateCollectorAsync(Arg.Any<IntermediateQueue>(), 2);
             director.Received(2).StartSearcher(Arg.Any<string[]>(), Arg.Any<Chunk>(), Arg.Any<IntermediateQueue>());
         }
 

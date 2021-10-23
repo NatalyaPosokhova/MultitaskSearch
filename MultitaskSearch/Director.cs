@@ -12,14 +12,19 @@ namespace MultitaskSearch
 
         }
 
-        public override Task<Dictionary<string, IList<int>>> CreateCollector(IntermediateQueue intermediateQueue, int countChunks)
+        public override Task<Dictionary<string, List<int>>> CreateCollectorAsync(IntermediateQueue intermediateQueue, int countChunks)
         {
-            throw new NotImplementedException();
+            return Task<Dictionary<string, List<int>>>.Run(() => {
+                return new Collector(intermediateQueue, countChunks).GetWordsAndPositionsList();
+            });
         }
 
         public override void StartSearcher(string[] searchWords, Chunk chunk, IntermediateQueue intermediateQueue)
         {
-            throw new NotImplementedException();
+            Task.Run(() =>
+            {
+                new Searcher(searchWords, chunk, intermediateQueue).FindWordsAndPositions();
+            });
         }
     }
 }

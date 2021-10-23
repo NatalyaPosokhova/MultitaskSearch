@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace MultitaskSearch
 {
@@ -24,13 +25,13 @@ namespace MultitaskSearch
             string wordStr;
             for (int i = 0; i < _chunk.Content.Length; i++)
             {
-                if(_chunk.Content[i] != ' ')
+                if (IsAlpha(_chunk.Content[i]))
                 {
                     word.Add(_chunk.Content[i]);
                 }
                 else
                 {
-                    if(word.Count > 0)
+                    if (word.Count > 0)
                     {
                         wordStr = new string(word.ToArray()).ToString();
                         if (_searchWords.Contains(wordStr))
@@ -40,7 +41,6 @@ namespace MultitaskSearch
                     }
                     word.Clear();
                 }
-
             }
 
             wordStr = new string(word.ToArray());
@@ -48,6 +48,13 @@ namespace MultitaskSearch
             {
                 _intermediateQueue.Put(wordStr, _chunk.Content.Length - wordStr.Length + _chunk.StartIndex);
             }
+
+            _intermediateQueue.DetachTask();
+        }
+
+        private bool IsAlpha(char symbol)
+        {
+            return Regex.IsMatch(symbol.ToString(), @"\w");
         }
     }
 }

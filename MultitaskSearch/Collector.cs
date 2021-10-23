@@ -17,8 +17,8 @@ namespace MultitaskSearch
 
         internal Dictionary<string, List<int>> GetWordsAndPositionsList()
         {
-            Dictionary<string, List<int>> result = new Dictionary<string, List<int>>();
-            List<KeyValuePair<string, int>> keyValuePairsList = new List<KeyValuePair<string, int>>();
+            Dictionary<string, IList<int>> result = new Dictionary<string, IList<int>>();
+            IList<KeyValuePair<string, int>> keyValuePairsList = new List<KeyValuePair<string, int>>();
 
             do
             {
