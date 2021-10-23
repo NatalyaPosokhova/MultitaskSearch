@@ -18,8 +18,8 @@ namespace MultitaskSearch
         }
 
         public abstract void StartSearcher(string[] searchWords, Chunk chunk, IntermediateQueue intermediateQueue);
-        public abstract Task<Dictionary<string, IList<int>>> CreateCollectorAsync(IntermediateQueue intermediateQueue, int countChunks);
-        public async Task<Dictionary<string, IList<int>>> GetWordsPositions()
+        public abstract Task<Dictionary<string, List<int>>> CreateCollectorAsync(IntermediateQueue intermediateQueue, int countChunks);
+        public async Task<Dictionary<string, List<int>>> GetWordsPositions()
         {
             IntermediateQueue intermediateQueue = new IntermediateQueue();
             int countChunks = _chunks.Count();
